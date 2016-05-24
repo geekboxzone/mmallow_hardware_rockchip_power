@@ -61,7 +61,7 @@ static void sysfs_write(char *path, char *s)
 
 static void rk_power_init(struct power_module *module)
 {
-    ALOGD("version 3.0\n");
+    ALOGD("version 4.0\n");
 
     boostpulse_fd = open(BOOSTPULSE_PATH, O_WRONLY);
     if (boostpulse_fd < 0) {
@@ -85,17 +85,17 @@ static void rk_power_set_interactive(struct power_module *module, int on)
 
     sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", on ? "10000000" : "816000");
     sysfs_write(INTERACTIVE_PATH "input_boost", on ? "1" : "0");
-    sysfs_write("/sys/devices/system/cpu/cpu7/online", on ? "1" : "0");
-    sysfs_write("/sys/devices/system/cpu/cpu6/online", on ? "1" : "0");
-    sysfs_write("/sys/devices/system/cpu/cpu5/online", on ? "1" : "0");
-    sysfs_write("/sys/devices/system/cpu/cpu4/online", on ? "1" : "0");
-    sysfs_write("/sys/devices/system/cpu/cpu3/online", on ? "1" : "0");
-    sysfs_write("/sys/devices/system/cpu/cpu2/online", on ? "1" : "0");
 #ifdef POWER_POLICY_BOX
     /*box use cpu1 for response remotectrl pwm's irq.*/
 #else
     sysfs_write("/sys/devices/system/cpu/cpu1/online", on ? "1" : "0");
 #endif
+    sysfs_write("/sys/devices/system/cpu/cpu2/online", on ? "1" : "0");
+    sysfs_write("/sys/devices/system/cpu/cpu3/online", on ? "1" : "0");
+    sysfs_write("/sys/devices/system/cpu/cpu4/online", on ? "1" : "0");
+    sysfs_write("/sys/devices/system/cpu/cpu5/online", on ? "1" : "0");
+    sysfs_write("/sys/devices/system/cpu/cpu6/online", on ? "1" : "0");
+    sysfs_write("/sys/devices/system/cpu/cpu7/online", on ? "1" : "0");
 }
 
 static void rk_power_hint(struct power_module *module, power_hint_t hint, void *data)
